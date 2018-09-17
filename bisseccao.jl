@@ -1,4 +1,4 @@
-function bisseccao(f ::Function, g ::Function, a::Real, b::Real; atol=1e-6, rtol=1e-6, maxiter=10_000)
+function bissecao(f ::Function, g ::Function, a::Real, b::Real; atol=1e-6, rtol=1e-6, maxiter=10_000)
     (fa, fb) = (f(a), f(b))
     ϵ = atol + rtol * (abs(fa) + abs(fb)) / 2
     if abs(fa) <= ϵ
@@ -9,7 +9,6 @@ function bisseccao(f ::Function, g ::Function, a::Real, b::Real; atol=1e-6, rtol
         error("f(a) e f(b) devem ter sinais diferentes")
     end
     x=g(a,b)
-    #x = (a + b) / 2
     fx = f(x)
     iter = 1
     while !(abs(fx) <= ϵ || iter > maxiter) #!negação
@@ -41,8 +40,8 @@ function bisseccao(f, a::Real, b, estrategia)
         g(a,b) =0.9*a+0.1*b
 
     elseif estrategia == :aletorio
-        r=rand()
-        g(a,b)=a * r + b * (1 - r)
+        #r=rand()
+        g(a,b)=a * r + b * (1 - rand())
 
     elseif estrategia == :falsa_posicao
         g(a,b)=(a * f(b) - b * f(a)) / (f(b) - f(a))
@@ -50,5 +49,5 @@ function bisseccao(f, a::Real, b, estrategia)
     end
 
 
-    return bisseccao(f, g, a, b)
+    return bissecao(f, g, a, b)
 end
